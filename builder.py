@@ -63,7 +63,7 @@ class Builder():
                 return False
         return True
 
-    def get_grid(self):
+    def get_puzzle_grid(self):
         # for i in range(3):
         #     print(self.board[0][i], self.board[1][i], self.board[2][i])
         # for i in range(3):
@@ -79,12 +79,14 @@ class Builder():
                 for j in range(3):
                     cell = num + j
                     for each in self.board[cell][i]:
-                        grid += str(each)
+                        if len(str(each)) == 1:
+                            grid += str(each)
+                        else:
+                            grid += ' '
             num += 3
         return grid
 
-    def obtain_puzzle(self):
-        temp_board = self.board.copy()
+    def build_puzzle(self):
         for cell in self.board:
             avail_val = self.avail_val.copy()
             num = random.randint(4, 5)
@@ -92,7 +94,24 @@ class Builder():
                 to_rem = random.choice(avail_val)
                 for i in range(3):
                     for j in range(3):
-                        if cell[i][j] == to_rem:
-                            cell[i][j] = '.'
+                        cell[i][j] = str(cell[i][j])
+                        if cell[i][j] == str(to_rem):
+                            cell[i][j] = '123456789'
                             avail_val.remove(to_rem)
                             num -= 1
+
+    def display(self):
+        grid = self.get_puzzle_grid()
+        print('    ---------------------------------------')
+        for grid_row in range(3):
+            for row in range(3):
+                row_string = '  |  '
+                cell_row = grid_row * 3 + row
+                for grid_col in range(3):
+                    for col in range(3):
+                        cell_col = grid_col * 3 + col
+                        row_string += grid[cell_row * 9 + cell_col] + '  '
+                    row_string += '  |  '
+                print(row_string)
+            print('    ---------------------------------------')
+        print("\n\n")

@@ -1,7 +1,16 @@
 from builder import Builder
+from solver import Solver
+print("Initial Solution ")
 
 newbuilder = Builder()
-newbuilder.obtain_puzzle()
-grid = newbuilder.get_grid()
+newbuilder.display()
+print("Actual  Puzzle||| Note:Might have multiple solutions")
 
+newbuilder.build_puzzle()
+newbuilder.display()
+
+print("Solved Solution:")
+
+solver = Solver(newbuilder)
+solver.display()
 
